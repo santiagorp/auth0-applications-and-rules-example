@@ -1,0 +1,67 @@
+extends layout
+
+block content
+  div(class="row")
+    div(class="col s12 m2")
+    div(class="col s12 m8")
+      p The following table shows all the applications (headers) against all the rules (rows).
+        | If the rule applies to the corresponding application the cell is shaded.
+    
+        p The rules are shown on the execution order.
+
+  div(class="row")
+    div(class="col s12")
+      div(class="card darken-1")
+        div(class="card-content")
+          div(class="card-image")
+            div(class="scrollable-table")
+              table(class="table table-stripped table-header-rotated")
+                thead
+                  tr
+                    th
+                    each app in apps
+                      th(class="rotate-45", title='Client ID: #{app.id}')
+                        div
+                          span #{app.name}
+                tbody
+                  each ruleName in ruleNames
+                    tr
+                      th(class="row-header clickable", onClick="previewRule('" + ruleName + "')") #{ruleName}
+                      each app, index in apps
+                        if apps[index].rules.indexOf(ruleName) >= 0
+                          td(class="yes", onClick="previewRule('" + ruleName + "')")
+                        else
+                          td(class="no", onClick="previewRule('" + ruleName + "')")
+          div(class="card-content")                
+          div(class="card-action")                
+            p(class="center") Click on any rule to see the code.
+            div(class="rulePreview" style="display: none")
+              h4 Rule preview    
+              div
+                span Rule name: 
+                  span(id="ruleName")
+              div
+                span Rule id: 
+                  span(id="ruleId")
+              pre(id="ruleCode")
+
+      div(class="userInfo")
+        span Logged in as 
+        span
+          strong #{user.name} 
+        div(class="logout")
+          a(href="/logout") Logout
+
+  script.
+    var rules = !{JSON.stringify(rules)};
+    
+    function previewRule(name) {
+      $(".rulePreview").show();
+      var r = rules.filter(function(r) {
+        return r.name == name;
+      })[0];
+      
+      $("#ruleName").text(r.name);
+      $("#ruleId").text(r.id);
+      $("#ruleCode").text(r.script);
+    }
