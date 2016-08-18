@@ -29,9 +29,9 @@ block content
                       th(class="row-header clickable", onClick="previewRule('" + ruleName + "')") #{ruleName}
                       each app, index in apps
                         if apps[index].rules.indexOf(ruleName) >= 0
-                          td(class="yes", onClick="previewRule('" + ruleName + "')")
+                          td(class="yes clickable", onClick="previewRule('" + ruleName + "')")
                         else
-                          td(class="no", onClick="previewRule('" + ruleName + "')")
+                          td(class="no clickable", onClick="previewRule('" + ruleName + "')")
           div(class="card-content")                
           div(class="card-action")                
             p(class="center") Click on any rule to see the code.

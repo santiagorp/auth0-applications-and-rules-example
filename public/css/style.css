@@ -62,14 +62,16 @@ td, th {
   cursor: pointer;
 }
 
+.clickable:hover {
+  background-color: #aae9ec;
+}
+
 table td.yes {
   background-color: #2d7688;
-  cursor: pointer;
 }
 
 table td.no {
   background-color: white;
-  cursor: pointer;
 }
 
 .table-header-rotated th.row-header{
